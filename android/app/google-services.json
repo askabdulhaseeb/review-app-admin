@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "2413783227",
+    "project_id": "myrevue-a3152",
+    "storage_bucket": "myrevue-a3152.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2413783227:android:d8a6084689647ddf39619e",
+        "android_client_info": {
+          "package_name": "com.app.admin_review"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "2413783227-kffublosqdgl18u1tpm9uv0530o7k11b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCe_OKYiXNQBC2vOTYjD0V1fXj8DT_nK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "2413783227-kffublosqdgl18u1tpm9uv0530o7k11b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
