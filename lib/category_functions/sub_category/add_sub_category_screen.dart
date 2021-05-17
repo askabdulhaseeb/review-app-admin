@@ -3,7 +3,6 @@ import 'package:admin_review/components/custom_app_bar.dart';
 import 'package:admin_review/components/custom_button.dart';
 import 'package:admin_review/components/custom_text_field.dart';
 import 'package:admin_review/model/category_model.dart';
-import 'package:admin_review/model/sub_category_model.dart';
 import 'package:admin_review/utils/color_constants.dart';
 import 'package:admin_review/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,14 +10,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class AddSubCategoryScreen extends StatefulWidget {
   @override
   _AddSubCategoryScreenState createState() => _AddSubCategoryScreenState();
 }
 
 class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
-
   final fireStoreInstance = FirebaseFirestore.instance;
   FirebaseStorage _storage = FirebaseStorage.instance;
 
@@ -35,12 +32,9 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
   File _image;
   bool formValidation = false;
 
-
   @override
   void initState() {
-
     _getAllCategories();
-
 
     super.initState();
   }
@@ -55,7 +49,6 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
             builder: (cxt) => Stack(
               alignment: AlignmentDirectional.center,
               children: [
-
                 Container(
                   height: MediaQuery.of(context).size.height,
                   padding: EdgeInsets.all(16.0),
@@ -64,8 +57,11 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        Text('Categories', style: TextStyle(fontFamily: 'Quicksand', fontSize: 20, )),
+                        Text('Categories',
+                            style: TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontSize: 20,
+                            )),
 
                         SizedBox(
                           height: 10,
@@ -86,15 +82,12 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
                             value: _selectedItem,
                             items: _categoriesDropdownMenuItems,
                             onChanged: (value) {
-
                               print('selected value id: ${value.id}');
                               print('selected value id: ${value.categoryName}');
-
 
                               setState(() {
                                 _selectedItem = value;
                               });
-
                             },
                           ),
                         ),
@@ -104,9 +97,12 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
                         ),
 
                         //sub-category title field
-                        CustomTextField(_subCategoryTitleController, 'Sub-Category Title',
-                            'Sub-Category Title', TextInputType.text, validateSubCategoryTitle),
-
+                        CustomTextField(
+                            _subCategoryTitleController,
+                            'Sub-Category Title',
+                            'Sub-Category Title',
+                            TextInputType.text,
+                            validateSubCategoryTitle),
 
                         SizedBox(
                           height: 10,
@@ -123,31 +119,31 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
                               Container(
                                 child: _image != null
                                     ? Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius:
-                                      BorderRadius.circular(10)),
-                                  width: 120,
-                                  height: 120,
-                                  child: Image.file(
-                                    _image,
-                                    width: 120,
-                                    height: 120,
-                                    fit: BoxFit.contain,
-                                  ),
-                                )
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        width: 120,
+                                        height: 120,
+                                        child: Image.file(
+                                          _image,
+                                          width: 120,
+                                          height: 120,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      )
                                     : Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius:
-                                      BorderRadius.circular(10)),
-                                  width: 120,
-                                  height: 120,
-                                  child: Icon(
-                                    Icons.image,
-                                    color: Colors.grey[800],
-                                  ),
-                                ),
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        width: 120,
+                                        height: 120,
+                                        child: Icon(
+                                          Icons.image,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
                               ),
                               SizedBox(
                                 height: 10,
@@ -155,9 +151,12 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
                               Text(
                                 'Pick Sub-Category Icon',
                               ),
-
                               Visibility(
-                                visible: formValidation ? _image == null ? true : false : false,
+                                visible: formValidation
+                                    ? _image == null
+                                        ? true
+                                        : false
+                                    : false,
                                 child: Text(
                                   'Please select sub-category icon',
                                   style: TextStyle(
@@ -169,36 +168,28 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
                           ),
                         ),
 
-
                         SizedBox(
                           height: 60,
                         ),
 
                         CustomButton(
                           'Add Sub Category',
-                              () {
+                          () {
+                            setState(() {
+                              formValidation = true;
+                            });
 
-                                setState(() {
-                                  formValidation = true;
-                                });
-
-                                validateAndSave(cxt, _selectedItem);
+                            validateAndSave(cxt, _selectedItem);
                           },
                         ),
-
-
-
                       ],
                     ),
                   ),
                 ),
-
                 Visibility(
                   visible: isLoading,
                   child: CircularProgressIndicator(),
                 ),
-
-
               ],
             ),
           ),
@@ -222,12 +213,10 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
 
       //_addSubCategory(cxt, selectedCategory);
       uploadSubCategoryIcon(cxt, _image, selectedCategory);
-
     }
   }
 
   void _getAllCategories() {
-
     CategoryModel categoryModel;
 
     fireStoreInstance.collection("categories").get().then((querySnapshot) {
@@ -244,12 +233,12 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
 
       _categoriesDropdownMenuItems = buildDropDownMenuItems(categoriesList);
       _selectedItem = _categoriesDropdownMenuItems[0].value;
-
     });
   }
 
-  List<DropdownMenuItem<CategoryModel>> buildDropDownMenuItems(List<CategoryModel> listItems) {
-    List<DropdownMenuItem<CategoryModel>> items = List();
+  List<DropdownMenuItem<CategoryModel>> buildDropDownMenuItems(
+      List<CategoryModel> listItems) {
+    List<DropdownMenuItem<CategoryModel>> items = [];
     for (CategoryModel listItem in listItems) {
       items.add(
         DropdownMenuItem(
@@ -261,41 +250,33 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
     return items;
   }
 
-  void _addSubCategory(BuildContext cxt, CategoryModel selectedCategory, String iconUrl) {
-
+  void _addSubCategory(
+      BuildContext cxt, CategoryModel selectedCategory, String iconUrl) {
     fireStoreInstance
         .collection("categories")
         .doc(selectedCategory.id)
         .collection("sub_categories")
         .add({
-          "category_id": selectedCategory.id,
-          "sub_category_name": _subCategoryTitleController.text,
-          "icon": iconUrl
-        }).then((value) => {
+      "category_id": selectedCategory.id,
+      "sub_category_name": _subCategoryTitleController.text,
+      "icon": iconUrl
+    }).then((value) => {
+              fireStoreInstance
+                  .collection("categories")
+                  .doc(selectedCategory.id)
+                  .collection("sub_categories")
+                  .doc(value.id)
+                  .set({
+                "sub_category_id": value.id,
+              }, SetOptions(merge: true)).then((_) {
+                print("success!");
+                Utils.displaySnackBar(cxt, 'Sub-Category added !', 2);
 
-
-          fireStoreInstance
-              .collection("categories")
-              .doc(selectedCategory.id)
-              .collection("sub_categories")
-              .doc(value.id).set(
-          {
-          "sub_category_id" : value.id,
-          },SetOptions(merge: true)).then((_) {
-
-
-            print("success!");
-            Utils.displaySnackBar(cxt, 'Sub-Category added !', 2);
-
-            setState(() {
-            isLoading = false;
+                setState(() {
+                  isLoading = false;
+                });
+              }),
             });
-
-          }),
-
-  });
-
-
 
     /*fireStoreInstance.collection("categories").doc(selectedCategory.id).set(
         {
@@ -310,8 +291,6 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
       });
 
     });*/
-
-
   }
 
   void _showPicker(context) {
@@ -345,53 +324,49 @@ class _AddSubCategoryScreenState extends State<AddSubCategoryScreen> {
   }
 
   _imgFromCamera() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicker = ImagePicker();
+    PickedFile image = await _imagePicker.getImage(
         source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 
   _imgFromGallery() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicker = ImagePicker();
+    PickedFile image = await _imagePicker.getImage(
         source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 
-  Future<String> uploadSubCategoryIcon(BuildContext cxt, File _image, CategoryModel selectedCategory) async {
-
+  Future<String> uploadSubCategoryIcon(
+      BuildContext cxt, File _image, CategoryModel selectedCategory) async {
     setState(() {
       isLoading = true;
     });
 
     var url;
-    Reference ref = _storage.ref().child("subCategoryIcons/" + DateTime.now().toString());
+    Reference ref =
+        _storage.ref().child("subCategoryIcons/" + DateTime.now().toString());
     UploadTask uploadTask = ref.putFile(_image);
     uploadTask.whenComplete(() {
       url = ref.getDownloadURL().then((value) => {
-
-        _addSubCategory(cxt, selectedCategory, value.toString()),
-
-        print('url: ${value.toString()}'),
-      });
-
-
+            _addSubCategory(cxt, selectedCategory, value.toString()),
+            print('url: ${value.toString()}'),
+          });
     }).catchError((onError) {
       print(onError);
     });
     return url.toString();
   }
 
-
-
   @override
   void dispose() {
     _subCategoryTitleController.dispose();
     super.dispose();
   }
-
 }

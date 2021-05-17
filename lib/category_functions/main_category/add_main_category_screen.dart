@@ -15,7 +15,6 @@ class AddMainCategoryScreen extends StatefulWidget {
 }
 
 class _AddMainCategoryScreenState extends State<AddMainCategoryScreen> {
-
   final fireStoreInstance = FirebaseFirestore.instance;
   FirebaseStorage _storage = FirebaseStorage.instance;
 
@@ -42,7 +41,6 @@ class _AddMainCategoryScreenState extends State<AddMainCategoryScreen> {
             builder: (cxt) => Stack(
               alignment: AlignmentDirectional.center,
               children: [
-
                 Container(
                   height: MediaQuery.of(context).size.height,
                   padding: EdgeInsets.all(16.0),
@@ -52,8 +50,12 @@ class _AddMainCategoryScreenState extends State<AddMainCategoryScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //category title field
-                        CustomTextField(_categoryTitleController, 'Category Title',
-                            'Category Title', TextInputType.text, validateCategoryTitle),
+                        CustomTextField(
+                            _categoryTitleController,
+                            'Category Title',
+                            'Category Title',
+                            TextInputType.text,
+                            validateCategoryTitle),
 
                         SizedBox(
                           height: 10,
@@ -70,31 +72,31 @@ class _AddMainCategoryScreenState extends State<AddMainCategoryScreen> {
                               Container(
                                 child: _image != null
                                     ? Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius:
-                                      BorderRadius.circular(10)),
-                                  width: 120,
-                                  height: 120,
-                                  child: Image.file(
-                                    _image,
-                                    width: 120,
-                                    height: 120,
-                                    fit: BoxFit.contain,
-                                  ),
-                                )
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        width: 120,
+                                        height: 120,
+                                        child: Image.file(
+                                          _image,
+                                          width: 120,
+                                          height: 120,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      )
                                     : Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius:
-                                      BorderRadius.circular(10)),
-                                  width: 120,
-                                  height: 120,
-                                  child: Icon(
-                                    Icons.image,
-                                    color: Colors.grey[800],
-                                  ),
-                                ),
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        width: 120,
+                                        height: 120,
+                                        child: Icon(
+                                          Icons.image,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
                               ),
                               SizedBox(
                                 height: 10,
@@ -102,9 +104,12 @@ class _AddMainCategoryScreenState extends State<AddMainCategoryScreen> {
                               Text(
                                 'Pick Category Image',
                               ),
-
                               Visibility(
-                                visible: formValidation ? _image == null ? true : false : false,
+                                visible: formValidation
+                                    ? _image == null
+                                        ? true
+                                        : false
+                                    : false,
                                 child: Text(
                                   'Please select category image',
                                   style: TextStyle(
@@ -123,8 +128,7 @@ class _AddMainCategoryScreenState extends State<AddMainCategoryScreen> {
                         //add category button
                         CustomButton(
                           'Add Category',
-                              () {
-
+                          () {
                             setState(() {
                               formValidation = true;
                               isLoading = true;
@@ -137,13 +141,10 @@ class _AddMainCategoryScreenState extends State<AddMainCategoryScreen> {
                     ),
                   ),
                 ),
-
                 Visibility(
                   visible: isLoading,
                   child: CircularProgressIndicator(),
                 ),
-
-
               ],
             ),
           ),
@@ -190,20 +191,22 @@ class _AddMainCategoryScreenState extends State<AddMainCategoryScreen> {
   }
 
   _imgFromCamera() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicker = ImagePicker();
+    PickedFile image = await _imagePicker.getImage(
         source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 
   _imgFromGallery() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicker = ImagePicker();
+    PickedFile image = await _imagePicker.getImage(
         source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 
@@ -214,64 +217,48 @@ class _AddMainCategoryScreenState extends State<AddMainCategoryScreen> {
       form.save();
 
       uploadCategoryPic(cxt, _image);
-
     }
   }
 
   void _addCategory(BuildContext cxt, String name, String image) {
-
     /*String docId = fireStoreInstance
         .collection('categories')
         .doc()
         .id;*/
 
-    fireStoreInstance.collection("categories").add(
-        {
-          "category_name" : name,
-          "image": image
-        }).then((value){
-
-
+    fireStoreInstance
+        .collection("categories")
+        .add({"category_name": name, "image": image}).then((value) {
       print(value.id);
-      fireStoreInstance.collection("categories").doc(value.id).set(
-          {
-            "id" : value.id,
-          },SetOptions(merge: true)).then((_){
+      fireStoreInstance.collection("categories").doc(value.id).set({
+        "id": value.id,
+      }, SetOptions(merge: true)).then((_) {
+        print("success!");
 
-            print("success!");
+        Utils.displaySnackBar(cxt, 'Category added !', 2);
 
-            Utils.displaySnackBar(cxt, 'Category added !', 2);
-
-            setState(() {
-              isLoading = false;
-            });
+        setState(() {
+          isLoading = false;
+        });
       });
-
-
-
     });
   }
 
   Future<String> uploadCategoryPic(BuildContext cxt, File _image) async {
-
     var url;
-    Reference ref = _storage.ref().child("categoryImages/" + DateTime.now().toString());
+    Reference ref =
+        _storage.ref().child("categoryImages/" + DateTime.now().toString());
     UploadTask uploadTask = ref.putFile(_image);
     uploadTask.whenComplete(() {
       url = ref.getDownloadURL().then((value) => {
-
-        _addCategory(cxt, _categoryTitleController.text, value.toString()),
-
-        print('url: ${value.toString()}'),
-      });
-
-
+            _addCategory(cxt, _categoryTitleController.text, value.toString()),
+            print('url: ${value.toString()}'),
+          });
     }).catchError((onError) {
       print(onError);
     });
     return url.toString();
   }
-
 
   @override
   void dispose() {

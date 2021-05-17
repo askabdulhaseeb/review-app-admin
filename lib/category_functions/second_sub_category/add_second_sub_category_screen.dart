@@ -11,14 +11,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class AddSecondSubCategoryScreen extends StatefulWidget {
   @override
-  _AddSecondSubCategoryScreenState createState() => _AddSecondSubCategoryScreenState();
+  _AddSecondSubCategoryScreenState createState() =>
+      _AddSecondSubCategoryScreenState();
 }
 
-class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen> {
-
+class _AddSecondSubCategoryScreenState
+    extends State<AddSecondSubCategoryScreen> {
   final fireStoreInstance = FirebaseFirestore.instance;
   FirebaseStorage _storage = FirebaseStorage.instance;
 
@@ -39,12 +39,9 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
   File _image;
   bool formValidation = false;
 
-
   @override
   void initState() {
-
     _getAllCategories();
-
 
     super.initState();
   }
@@ -59,7 +56,6 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
             builder: (cxt) => Stack(
               alignment: AlignmentDirectional.center,
               children: [
-
                 Container(
                   height: MediaQuery.of(context).size.height,
                   padding: EdgeInsets.all(16.0),
@@ -68,8 +64,11 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        Text('Categories', style: TextStyle(fontFamily: 'Quicksand', fontSize: 20, )),
+                        Text('Categories',
+                            style: TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontSize: 20,
+                            )),
 
                         SizedBox(
                           height: 10,
@@ -90,10 +89,8 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
                             value: _selectedItem,
                             items: _categoriesDropdownMenuItems,
                             onChanged: (value) {
-
                               print('selected value id: ${value.id}');
                               print('selected value id: ${value.categoryName}');
-
 
                               setState(() {
                                 _selectedItem = value;
@@ -101,7 +98,6 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
                               });
 
                               _getAllSubCategories();
-
                             },
                           ),
                         ),
@@ -110,7 +106,11 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
                           height: 10,
                         ),
 
-                        Text('Sub-Categories', style: TextStyle(fontFamily: 'Quicksand', fontSize: 20, )),
+                        Text('Sub-Categories',
+                            style: TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontSize: 20,
+                            )),
 
                         SizedBox(
                           height: 10,
@@ -131,29 +131,29 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
                             value: _selectedSubCategoryItem,
                             items: _subCategoriesDropdownMenuItems,
                             onChanged: (value) {
-
-                              print('selected value id: ${value.subCategoryId}');
-                              print('selected value id: ${value.subCategoryName}');
-
+                              print(
+                                  'selected value id: ${value.subCategoryId}');
+                              print(
+                                  'selected value id: ${value.subCategoryName}');
 
                               setState(() {
                                 _selectedSubCategoryItem = value;
                               });
-
                             },
                           ),
                         ),
-
 
                         SizedBox(
                           height: 10,
                         ),
 
-
                         //second sub-category title field
-                        CustomTextField(_subCategoryTitleController, 'Second Sub-Category Title',
-                            'Second Sub-Category Title', TextInputType.text, validateSubCategoryTitle),
-
+                        CustomTextField(
+                            _subCategoryTitleController,
+                            'Second Sub-Category Title',
+                            'Second Sub-Category Title',
+                            TextInputType.text,
+                            validateSubCategoryTitle),
 
                         SizedBox(
                           height: 10,
@@ -170,31 +170,31 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
                               Container(
                                 child: _image != null
                                     ? Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius:
-                                      BorderRadius.circular(10)),
-                                  width: 120,
-                                  height: 120,
-                                  child: Image.file(
-                                    _image,
-                                    width: 120,
-                                    height: 120,
-                                    fit: BoxFit.contain,
-                                  ),
-                                )
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        width: 120,
+                                        height: 120,
+                                        child: Image.file(
+                                          _image,
+                                          width: 120,
+                                          height: 120,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      )
                                     : Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius:
-                                      BorderRadius.circular(10)),
-                                  width: 120,
-                                  height: 120,
-                                  child: Icon(
-                                    Icons.image,
-                                    color: Colors.grey[800],
-                                  ),
-                                ),
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        width: 120,
+                                        height: 120,
+                                        child: Icon(
+                                          Icons.image,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
                               ),
                               SizedBox(
                                 height: 10,
@@ -202,9 +202,12 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
                               Text(
                                 'Pick Second\nSub-Category Icon',
                               ),
-
                               Visibility(
-                                visible: formValidation ? _image == null ? true : false : false,
+                                visible: formValidation
+                                    ? _image == null
+                                        ? true
+                                        : false
+                                    : false,
                                 child: Text(
                                   'Please select\nsecond sub-category icon',
                                   style: TextStyle(
@@ -216,36 +219,29 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
                           ),
                         ),
 
-
                         SizedBox(
                           height: 60,
                         ),
 
                         CustomButton(
                           'Add Sub Category',
-                              () {
+                          () {
+                            setState(() {
+                              formValidation = true;
+                            });
 
-                                setState(() {
-                                  formValidation = true;
-                                });
-
-                                validateAndSave(cxt, _selectedItem, _selectedSubCategoryItem);
+                            validateAndSave(
+                                cxt, _selectedItem, _selectedSubCategoryItem);
                           },
                         ),
-
-
-
                       ],
                     ),
                   ),
                 ),
-
                 Visibility(
                   visible: isLoading,
                   child: CircularProgressIndicator(),
                 ),
-
-
               ],
             ),
           ),
@@ -261,20 +257,20 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
       return null;
   };
 
-  void validateAndSave(BuildContext cxt, CategoryModel selectedCategory, SubCategoryModel selectedSubCategory) async {
+  void validateAndSave(BuildContext cxt, CategoryModel selectedCategory,
+      SubCategoryModel selectedSubCategory) async {
     final form = formKey.currentState;
 
     if (form.validate()) {
       form.save();
 
       //_addSubCategory(cxt, selectedCategory);
-      uploadSecondSubCategoryIcon(cxt, _image, selectedCategory, selectedSubCategory);
-
+      uploadSecondSubCategoryIcon(
+          cxt, _image, selectedCategory, selectedSubCategory);
     }
   }
 
   void _getAllCategories() {
-
     CategoryModel categoryModel;
 
     fireStoreInstance.collection("categories").get().then((querySnapshot) {
@@ -285,34 +281,27 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
         categoriesList.add(categoryModel);
       });
 
-
       _categoriesDropdownMenuItems = buildDropDownMenuItems(categoriesList);
       _selectedItem = _categoriesDropdownMenuItems[0].value;
 
       _getAllSubCategories();
-
     });
   }
 
   void _getAllSubCategories() {
-
     subCategoriesList.clear();
 
     SubCategoryModel subCategoryModel;
 
     try {
-
       fireStoreInstance
           .collection("categories")
           .doc(_selectedItem?.id)
           .collection("sub_categories")
           .get()
           .then((querySnapshot) {
-
-
         querySnapshot.docs.forEach((result) {
           print(result.data());
-
 
           subCategoryModel = SubCategoryModel.fromJson(result.data());
           subCategoriesList.add(subCategoryModel);
@@ -322,22 +311,18 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
           isLoading = false;
         });
 
-
-        _subCategoriesDropdownMenuItems = buildSubCategoryDropDownMenuItems(subCategoriesList);
+        _subCategoriesDropdownMenuItems =
+            buildSubCategoryDropDownMenuItems(subCategoriesList);
         _selectedSubCategoryItem = _subCategoriesDropdownMenuItems[0]?.value;
-
       });
-
-
-    }catch(e) {
+    } catch (e) {
       print(e.toString());
     }
-
-
   }
 
-  List<DropdownMenuItem<CategoryModel>> buildDropDownMenuItems(List<CategoryModel> listItems) {
-    List<DropdownMenuItem<CategoryModel>> items = List();
+  List<DropdownMenuItem<CategoryModel>> buildDropDownMenuItems(
+      List<CategoryModel> listItems) {
+    List<DropdownMenuItem<CategoryModel>> items = [];
     for (CategoryModel listItem in listItems) {
       items.add(
         DropdownMenuItem(
@@ -349,8 +334,9 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
     return items;
   }
 
-  List<DropdownMenuItem<SubCategoryModel>> buildSubCategoryDropDownMenuItems(List<SubCategoryModel> listItems) {
-    List<DropdownMenuItem<SubCategoryModel>> items = List();
+  List<DropdownMenuItem<SubCategoryModel>> buildSubCategoryDropDownMenuItems(
+      List<SubCategoryModel> listItems) {
+    List<DropdownMenuItem<SubCategoryModel>> items = [];
     for (SubCategoryModel listItem in listItems) {
       items.add(
         DropdownMenuItem(
@@ -364,7 +350,6 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
 
   void _addSecondSubCategory(BuildContext cxt, CategoryModel selectedCategory,
       SubCategoryModel selectedSubCategory, String iconUrl) {
-
     fireStoreInstance
         .collection("categories")
         .doc(selectedCategory.id)
@@ -372,37 +357,29 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
         .doc(selectedSubCategory.subCategoryId)
         .collection('second_sub_categories')
         .add({
-          "category_id": selectedCategory.id,
-          "sub_category_name": _subCategoryTitleController.text,
-          "sub_category_id": selectedSubCategory.subCategoryId,
-          "icon": iconUrl
-        }).then((value) => {
+      "category_id": selectedCategory.id,
+      "sub_category_name": _subCategoryTitleController.text,
+      "sub_category_id": selectedSubCategory.subCategoryId,
+      "icon": iconUrl
+    }).then((value) => {
+              fireStoreInstance
+                  .collection("categories")
+                  .doc(selectedCategory.id)
+                  .collection("sub_categories")
+                  .doc(selectedSubCategory.subCategoryId)
+                  .collection('second_sub_categories')
+                  .doc(value.id)
+                  .set({
+                "second_sub_category_id": value.id,
+              }, SetOptions(merge: true)).then((_) {
+                print("success!");
+                Utils.displaySnackBar(cxt, 'Second Sub-Category added !', 2);
 
-
-          fireStoreInstance
-              .collection("categories")
-              .doc(selectedCategory.id)
-              .collection("sub_categories")
-              .doc(selectedSubCategory.subCategoryId)
-              .collection('second_sub_categories')
-              .doc(value.id).set(
-          {
-          "second_sub_category_id" : value.id,
-          },SetOptions(merge: true)).then((_) {
-
-
-            print("success!");
-            Utils.displaySnackBar(cxt, 'Second Sub-Category added !', 2);
-
-            setState(() {
-            isLoading = false;
+                setState(() {
+                  isLoading = false;
+                });
+              }),
             });
-
-          }),
-
-  });
-
-
   }
 
   void _showPicker(context) {
@@ -436,42 +413,45 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
   }
 
   _imgFromCamera() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicker = ImagePicker();
+    PickedFile image = await _imagePicker.getImage(
         source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 
   _imgFromGallery() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicker = ImagePicker();
+    PickedFile image = await _imagePicker.getImage(
         source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 
-  Future<String> uploadSecondSubCategoryIcon(BuildContext cxt, File _image,
-      CategoryModel selectedCategory, SubCategoryModel selectedSubCategory) async {
-
+  Future<String> uploadSecondSubCategoryIcon(
+      BuildContext cxt,
+      File _image,
+      CategoryModel selectedCategory,
+      SubCategoryModel selectedSubCategory) async {
     setState(() {
       isLoading = true;
     });
 
     var url;
-    Reference ref = _storage.ref().child("secondSubCategoryIcons/" + DateTime.now().toString());
+    Reference ref = _storage
+        .ref()
+        .child("secondSubCategoryIcons/" + DateTime.now().toString());
     UploadTask uploadTask = ref.putFile(_image);
     uploadTask.whenComplete(() {
       url = ref.getDownloadURL().then((value) => {
-
-        _addSecondSubCategory(cxt, selectedCategory, selectedSubCategory, value.toString()),
-
-        print('url: ${value.toString()}'),
-      });
-
-
+            _addSecondSubCategory(
+                cxt, selectedCategory, selectedSubCategory, value.toString()),
+            print('url: ${value.toString()}'),
+          });
     }).catchError((onError) {
       print(onError);
     });
@@ -479,12 +459,9 @@ class _AddSecondSubCategoryScreenState extends State<AddSecondSubCategoryScreen>
     return url.toString();
   }
 
-
-
   @override
   void dispose() {
     _subCategoryTitleController.dispose();
     super.dispose();
   }
-
 }

@@ -53,36 +53,41 @@ class _AppUsersScreenState extends State<AppUsersScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   children: [
-
                                     SizedBox(
                                       width: 120,
                                       height: 120,
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(8.0),
-                                        child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          imageUrl: appUsersList[index].profileImage,
-                                          progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                              CupertinoActivityIndicator(),
-                                          errorWidget: (context, url, error) => Icon(Icons.error),
-                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: appUsersList[index]
+                                                    .profileImage !=
+                                                null
+                                            ? CachedNetworkImage(
+                                                fit: BoxFit.cover,
+                                                imageUrl: appUsersList[index]
+                                                    .profileImage,
+                                                progressIndicatorBuilder: (context,
+                                                        url,
+                                                        downloadProgress) =>
+                                                    CupertinoActivityIndicator(),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(Icons.error),
+                                              )
+                                            : const SizedBox(),
                                       ),
                                     ),
-
                                     SizedBox(
                                       width: 16,
                                     ),
-
                                     Expanded(
                                       flex: 3,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-
                                           Text(
-                                            '${appUsersList[index]
-                                                .firstName} ${appUsersList[index]
-                                                .lastName}',
+                                            '${appUsersList[index].firstName} ${appUsersList[index].lastName}',
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(
@@ -92,14 +97,11 @@ class _AppUsersScreenState extends State<AppUsersScreen> {
                                               color: ColorConstants.blackColor,
                                             ),
                                           ),
-
                                           SizedBox(
                                             height: 4,
                                           ),
-
                                           Text(
-                                            'Email: ${appUsersList[index]
-                                                .email}',
+                                            'Email: ${appUsersList[index].email}',
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(
@@ -109,14 +111,11 @@ class _AppUsersScreenState extends State<AppUsersScreen> {
                                               color: ColorConstants.blackColor,
                                             ),
                                           ),
-
                                           SizedBox(
                                             height: 4,
                                           ),
-
                                           Text(
-                                            'Contact No: ${appUsersList[index]
-                                                .phoneNo}',
+                                            'Contact No: ${appUsersList[index].phoneNo}',
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(
@@ -126,14 +125,11 @@ class _AppUsersScreenState extends State<AppUsersScreen> {
                                               color: ColorConstants.blackColor,
                                             ),
                                           ),
-
                                           SizedBox(
                                             height: 4,
                                           ),
-
                                           Text(
-                                            'Address:\n${appUsersList[index]
-                                                .address}',
+                                            'Address:\n${appUsersList[index].address}',
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(
@@ -143,14 +139,11 @@ class _AppUsersScreenState extends State<AppUsersScreen> {
                                               color: ColorConstants.blackColor,
                                             ),
                                           ),
-
                                           SizedBox(
                                             height: 4,
                                           ),
-
                                           Text(
-                                            'DOB: ${appUsersList[index]
-                                                .dob}',
+                                            'DOB: ${appUsersList[index].dob}',
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(
@@ -160,14 +153,11 @@ class _AppUsersScreenState extends State<AppUsersScreen> {
                                               color: ColorConstants.blackColor,
                                             ),
                                           ),
-
                                           SizedBox(
                                             height: 4,
                                           ),
-
                                           Text(
-                                            'Profession: ${appUsersList[index]
-                                                .profession}',
+                                            'Profession: ${appUsersList[index].profession}',
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(
@@ -177,91 +167,124 @@ class _AppUsersScreenState extends State<AppUsersScreen> {
                                               color: ColorConstants.blackColor,
                                             ),
                                           ),
-
-
-
                                         ],
                                       ),
                                     ),
-
                                     SizedBox(
                                       width: 16,
                                     ),
-
                                     Expanded(
                                       flex: 1,
                                       child: InkWell(
                                         onTap: () {
-
                                           deleteConfirmationDialog = Dialog(
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)), //this right here
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        12.0)), //this right here
                                             child: Container(
-                                              width: MediaQuery.of(context).size.width,
-                                              height: MediaQuery.of(context).size.height / 2.5,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  2.5,
                                               //margin: EdgeInsets.all(16),
                                               child: SingleChildScrollView(
                                                 child: Column(
                                                   children: <Widget>[
-
                                                     SizedBox(
                                                       height: 16,
                                                     ),
-
                                                     Padding(
-                                                      padding:  EdgeInsets.all(8.0),
-                                                      child: Text('Delete Confirmation', style: TextStyle(fontFamily: 'Quicksand', fontSize: 26, color: Colors.black, fontWeight: FontWeight.bold),),
+                                                      padding:
+                                                          EdgeInsets.all(8.0),
+                                                      child: Text(
+                                                        'Delete Confirmation',
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                'Quicksand',
+                                                            fontSize: 26,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
                                                     ),
                                                     Padding(
-                                                      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 56.0),
-                                                      child: Text('Are you sure want to delete this user ?',
-                                                        style: TextStyle(fontSize: 20, color: Colors.black, fontFamily: 'Quicksand',), textAlign: TextAlign.center, ),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 16.0,
+                                                              vertical: 56.0),
+                                                      child: Text(
+                                                        'Are you sure want to delete this user ?',
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: Colors.black,
+                                                          fontFamily:
+                                                              'Quicksand',
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
                                                     ),
-
                                                     Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
                                                       children: [
-                                                        RaisedButton(
-                                                          color: Colors.blue,
+                                                        ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  primary: Colors
+                                                                      .blue),
                                                           onPressed: () {
-
-                                                            Navigator.pop(context);
+                                                            Navigator.pop(
+                                                                context);
 
                                                             //delete record from fire store database
-                                                            _deleteUser(cxt, appUsersList[index].id);
-
+                                                            _deleteUser(
+                                                                cxt,
+                                                                appUsersList[
+                                                                        index]
+                                                                    .id);
                                                           },
                                                           child: new Text("Yes",
                                                               style: TextStyle(
-                                                                  color: ColorConstants.whiteColor)),
+                                                                  color: ColorConstants
+                                                                      .whiteColor)),
                                                         ),
                                                         SizedBox(
                                                           width: 8,
                                                         ),
-                                                        RaisedButton(
-                                                          color: ColorConstants.redColor,
+                                                        ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  primary:
+                                                                      ColorConstants
+                                                                          .redColor),
                                                           onPressed: () {
-
-                                                            Navigator.pop(context);
-
+                                                            Navigator.pop(
+                                                                context);
                                                           },
                                                           child: new Text("No",
                                                               style: TextStyle(
-                                                                  color: ColorConstants.whiteColor)),
+                                                                  color: ColorConstants
+                                                                      .whiteColor)),
                                                         ),
                                                       ],
                                                     ),
-
-
-
                                                   ],
                                                 ),
                                               ),
                                             ),
                                           );
 
-                                          showDialog(context: context, builder: (BuildContext context) => deleteConfirmationDialog);
-
-
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  deleteConfirmationDialog);
                                         },
                                         child: Container(
                                           padding: EdgeInsets.all(4),
@@ -269,15 +292,16 @@ class _AppUsersScreenState extends State<AppUsersScreen> {
                                               border: Border.all(
                                                 color: Colors.red[500],
                                               ),
-                                              borderRadius: BorderRadius.all(Radius.circular(4))
-                                          ),
-                                          child: Center(child: Text('Delete', style: TextStyle(color: ColorConstants.redColor))),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4))),
+                                          child: Center(
+                                              child: Text('Delete',
+                                                  style: TextStyle(
+                                                      color: ColorConstants
+                                                          .redColor))),
                                         ),
                                       ),
                                     ),
-
-
-
                                   ],
                                 ),
                               ),
@@ -318,38 +342,29 @@ class _AppUsersScreenState extends State<AppUsersScreen> {
   }
 
   void _deleteUser(BuildContext cxt, String id) {
-
     setState(() {
       isLoading = true;
     });
 
     fireStoreInstance.collection("app_users").doc(id).delete().then((_) {
-
       deleteUserFromList(id);
       Utils.displaySnackBar(cxt, 'User deleted !', 2);
       print("success!");
-
     });
-
   }
 
   deleteUserFromList(String id) {
     int keyIndex = -1;
-    for(int i=0; i<appUsersList.length; i++) {
-
-      if(appUsersList[i].id == id) {
+    for (int i = 0; i < appUsersList.length; i++) {
+      if (appUsersList[i].id == id) {
         keyIndex = i;
       }
     }
 
-    if(keyIndex != -1)
-      appUsersList.removeAt(keyIndex);
+    if (keyIndex != -1) appUsersList.removeAt(keyIndex);
 
     setState(() {
       isLoading = false;
     });
-
   }
-
-
 }

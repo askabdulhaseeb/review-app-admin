@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditSubCategoryScreen extends StatefulWidget {
-
   final SubCategoryModel subCategoryObj;
   EditSubCategoryScreen({this.subCategoryObj});
 
@@ -21,7 +20,6 @@ class EditSubCategoryScreen extends StatefulWidget {
 }
 
 class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
-
   final fireStoreInstance = FirebaseFirestore.instance;
   FirebaseStorage _storage = FirebaseStorage.instance;
 
@@ -35,8 +33,8 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
 
   @override
   void initState() {
-
-    _subCategoryTitleController = TextEditingController(text: widget.subCategoryObj.subCategoryName);
+    _subCategoryTitleController =
+        TextEditingController(text: widget.subCategoryObj.subCategoryName);
 
     super.initState();
   }
@@ -52,7 +50,6 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
               child: Stack(
                 alignment: AlignmentDirectional.center,
                 children: [
-
                   Container(
                     height: MediaQuery.of(context).size.height,
                     padding: EdgeInsets.all(16.0),
@@ -62,10 +59,13 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
                             //category title field
-                            CustomTextField(_subCategoryTitleController, 'Sub Category Title',
-                                'Sub Category Title', TextInputType.text, validateCategoryTitle),
+                            CustomTextField(
+                                _subCategoryTitleController,
+                                'Sub Category Title',
+                                'Sub Category Title',
+                                TextInputType.text,
+                                validateCategoryTitle),
 
                             SizedBox(
                               height: 10,
@@ -82,34 +82,38 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
                                   Container(
                                     child: _image != null
                                         ? Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[200],
-                                          borderRadius:
-                                          BorderRadius.circular(10)),
-                                      width: 120,
-                                      height: 120,
-                                      child: Image.file(
-                                        _image,
-                                        width: 120,
-                                        height: 120,
-                                        fit: BoxFit.contain,
-                                      ),
-                                    )
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey[200],
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            width: 120,
+                                            height: 120,
+                                            child: Image.file(
+                                              _image,
+                                              width: 120,
+                                              height: 120,
+                                              fit: BoxFit.contain,
+                                            ),
+                                          )
                                         : Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                          BorderRadius.circular(10)),
-                                      width: 120,
-                                      height: 120,
-                                      child: CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                        imageUrl: widget.subCategoryObj.icon,
-                                        progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                            CupertinoActivityIndicator(),
-                                        errorWidget: (context, url, error) => Icon(Icons.error),
-                                      ),
-                                    ),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            width: 120,
+                                            height: 120,
+                                            child: CachedNetworkImage(
+                                              fit: BoxFit.cover,
+                                              imageUrl:
+                                                  widget.subCategoryObj.icon,
+                                              progressIndicatorBuilder: (context,
+                                                      url, downloadProgress) =>
+                                                  CupertinoActivityIndicator(),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            ),
+                                          ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -117,8 +121,6 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
                                   Text(
                                     'Pick Sub-Category Image',
                                   ),
-
-
                                 ],
                               ),
                             ),
@@ -130,16 +132,13 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
                             //update sub-category button
                             CustomButton(
                               'Update Sub-Category',
-                                  () {
-
+                              () {
                                 setState(() {
                                   formValidation = true;
                                   isLoading = true;
                                 });
 
                                 validateAndSave(cxt);
-
-
                               },
                             ),
                           ],
@@ -147,12 +146,10 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
                       ),
                     ),
                   ),
-
                   Visibility(
                     visible: isLoading,
                     child: CircularProgressIndicator(),
                   ),
-
                 ],
               ),
             ),
@@ -200,20 +197,22 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
   }
 
   _imgFromCamera() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicked = ImagePicker();
+    PickedFile image = await _imagePicked.getImage(
         source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 
   _imgFromGallery() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicked = ImagePicker();
+    PickedFile image = await _imagePicked.getImage(
         source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 
@@ -223,23 +222,16 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
     if (form.validate()) {
       form.save();
 
-
-      if(_image == null) {
+      if (_image == null) {
         _updateSubCategory(cxt);
-      }
-      else {
-
+      } else {
         print('in else: sub-category icon got from image picker');
         uploadSubCategoryPic(cxt, _image);
-
       }
-
-
     }
   }
 
   void _updateSubCategory(BuildContext cxt) {
-
     /*fireStoreInstance
         .collection("categories")
         .doc(widget.subCategoryObj.id)
@@ -265,10 +257,9 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
         .update({
       "category_id": widget.subCategoryObj.categoryId,
       "sub_category_id": widget.subCategoryObj.subCategoryId,
-      "sub_category_name" : _subCategoryTitleController.text,
+      "sub_category_name": _subCategoryTitleController.text,
       "icon": widget.subCategoryObj.icon
     }).then((_) {
-
       setState(() {
         isLoading = false;
       });
@@ -276,14 +267,9 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
       //show update success snack bar
       Utils.displaySnackBar(cxt, 'Sub-Category updated !', 2);
     });
-
-
-
   }
 
-
   void _addSubCategory(BuildContext cxt, String name, String image) {
-
     fireStoreInstance
         .collection("categories")
         .doc(widget.subCategoryObj.categoryId)
@@ -292,47 +278,36 @@ class _EditSubCategoryScreenState extends State<EditSubCategoryScreen> {
         .update({
       "category_id": widget.subCategoryObj.categoryId,
       "sub_category_id": widget.subCategoryObj.subCategoryId,
-      "sub_category_name" : _subCategoryTitleController.text,
+      "sub_category_name": _subCategoryTitleController.text,
       "icon": image
     }).then((_) {
-
       //show update success snack bar
       Utils.displaySnackBar(cxt, 'Sub-Category updated !', 2);
     });
-
-
   }
 
   uploadSubCategoryPic(BuildContext cxt, File _image) async {
-
-    Reference ref = _storage.ref().child("subCategoryIcons/" + DateTime.now().toString());
+    Reference ref =
+        _storage.ref().child("subCategoryIcons/" + DateTime.now().toString());
 
     UploadTask uploadTask = ref.putFile(_image);
     uploadTask.whenComplete(() {
       ref.getDownloadURL().then((value) => {
-
-        _addSubCategory(cxt, _subCategoryTitleController.text, value.toString()),
-        print('url: ${value.toString()}'),
-
-        setState(() {
-          isLoading = false;
-        }),
-
-      });
-
-
+            _addSubCategory(
+                cxt, _subCategoryTitleController.text, value.toString()),
+            print('url: ${value.toString()}'),
+            setState(() {
+              isLoading = false;
+            }),
+          });
     }).catchError((onError) {
       print(onError);
     });
-
-
   }
-
 
   @override
   void dispose() {
     _subCategoryTitleController.dispose();
     super.dispose();
   }
-
 }

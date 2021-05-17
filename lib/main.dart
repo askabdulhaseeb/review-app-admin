@@ -1,4 +1,4 @@
-import 'package:admin_review/home/push_notification.dart';
+import 'package:admin_review/notifications/push_notification.dart';
 import 'package:admin_review/sign_in/sign_in_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

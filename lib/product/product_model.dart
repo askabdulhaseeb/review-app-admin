@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class MyProduct {
   String id;
   String image;
@@ -44,7 +42,7 @@ class MyProduct {
       name: map['prod_name'],
       secondSubCategory: map['second_sub_category'],
       subCategory: map['sub_category'],
-      price: map['price'],
+      price: map['price'] != null ? map['price'].toString() : null,
       likes: map['likes'],
       id: map['id'],
     );

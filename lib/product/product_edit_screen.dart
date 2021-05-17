@@ -3,7 +3,6 @@ import 'package:admin_review/components/custom_app_bar.dart';
 import 'package:admin_review/components/custom_button.dart';
 import 'package:admin_review/product/product_model.dart';
 import 'package:admin_review/utils/color_constants.dart';
-import 'package:admin_review/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -36,7 +35,7 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
       appBar: CustomAppBar(title: 'Edit Product Image'),
       body: SafeArea(
         child: Stack(
-              alignment: AlignmentDirectional.center,
+          alignment: AlignmentDirectional.center,
           children: [
             SingleChildScrollView(
               child: Column(
@@ -45,16 +44,23 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                     onTap: () {
                       _showPicker(context);
                     },
-                    child: 
-                    _image==null?
-                    CachedNetworkImage(
-                      imageUrl: widget.object.image,
-                      height: 220,
-                      fit: BoxFit.fill,
-                      placeholder: (context, url) => CupertinoActivityIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    ):Image.file(_image,height: 220,
-                      fit: BoxFit.fill,),
+                    child: _image == null
+                        ? (widget.object.image != null
+                            ? CachedNetworkImage(
+                                imageUrl: widget.object.image,
+                                height: 220,
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    CupertinoActivityIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              )
+                            : const SizedBox())
+                        : Image.file(
+                            _image,
+                            height: 220,
+                            fit: BoxFit.fill,
+                          ),
                   ),
                   SizedBox(
                     height: 16,
@@ -107,9 +113,9 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
               ),
             ),
             Visibility(
-                    visible: isLoading,
-                    child: CircularProgressIndicator(),
-                  ),
+              visible: isLoading,
+              child: CircularProgressIndicator(),
+            ),
           ],
         ),
       ),
@@ -147,20 +153,22 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
   }
 
   _imgFromCamera() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicked = ImagePicker();
+    PickedFile image = await _imagePicked.getImage(
         source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 
   _imgFromGallery() async {
-    File image = await ImagePicker.pickImage(
+    ImagePicker _imagePicker = ImagePicker();
+    PickedFile image = await _imagePicker.getImage(
         source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 }

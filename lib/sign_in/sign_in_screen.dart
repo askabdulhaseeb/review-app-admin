@@ -1,4 +1,3 @@
-import 'package:admin_review/components/custom_app_bar.dart';
 import 'package:admin_review/components/custom_button.dart';
 import 'package:admin_review/components/custom_text_field.dart';
 import 'package:admin_review/home/home_screen.dart';
@@ -38,7 +37,8 @@ class _SignInScreenState extends State<SignInScreen> {
         automaticallyImplyLeading: false,
         title: Text(
           'Admin Panel',
-          style: TextStyle(fontFamily: 'Quicksand', color: ColorConstants.blackColor),
+          style: TextStyle(
+              fontFamily: 'Quicksand', color: ColorConstants.blackColor),
         ),
         centerTitle: true,
       ),
@@ -55,7 +55,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Stack(
                       alignment: AlignmentDirectional.center,
                       children: [
-
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -82,8 +81,12 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
 
                             //username field
-                            CustomTextField(_usernameController, 'Username',
-                                'Username', TextInputType.text, validateUsername),
+                            CustomTextField(
+                                _usernameController,
+                                'Username',
+                                'Username',
+                                TextInputType.text,
+                                validateUsername),
                             SizedBox(height: 16),
                             //password field
                             CustomTextField(
@@ -104,19 +107,17 @@ class _SignInScreenState extends State<SignInScreen> {
                                 //sign in logic
                                 //validateAndSave(cxt);
 
-                                Navigator.of(context)
-                                    .push(new MaterialPageRoute(builder: (context) => HomeScreen()));
-
+                                Navigator.of(context).push(
+                                    new MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
                               },
                             ),
                           ],
                         ),
-
                         Visibility(
                           visible: isLoading,
                           child: CircularProgressIndicator(),
                         ),
-
                       ],
                     ),
                   ),
@@ -128,9 +129,6 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
-
-
-
 
   Function(String) validateUsername = (String username) {
     if (username.isEmpty) {
@@ -154,7 +152,6 @@ class _SignInScreenState extends State<SignInScreen> {
   };
 
   performLogin(BuildContext cxt) {
-
     setState(() {
       isLoading = true;
     });
@@ -194,7 +191,6 @@ class _SignInScreenState extends State<SignInScreen> {
       performLogin(cxt);
     }
   }
-
 
   @override
   void dispose() {

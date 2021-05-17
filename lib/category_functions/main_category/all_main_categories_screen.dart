@@ -8,7 +8,6 @@ import 'package:admin_review/utils/color_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-
 class AllMainCategoriesScreen extends StatefulWidget {
   @override
   _AllMainCategoriesScreenState createState() =>
@@ -16,7 +15,6 @@ class AllMainCategoriesScreen extends StatefulWidget {
 }
 
 class _AllMainCategoriesScreenState extends State<AllMainCategoriesScreen> {
-
   final fireStoreInstance = FirebaseFirestore.instance;
   List<CategoryModel> categoriesList = [];
 
@@ -42,7 +40,6 @@ class _AllMainCategoriesScreenState extends State<AllMainCategoriesScreen> {
               child: Stack(
                 alignment: AlignmentDirectional.center,
                 children: [
-
                   SingleChildScrollView(
                     child: Column(
                       children: [
@@ -57,7 +54,6 @@ class _AllMainCategoriesScreenState extends State<AllMainCategoriesScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-
                                   SizedBox(
                                     width: 120,
                                     height: 120,
@@ -66,19 +62,21 @@ class _AllMainCategoriesScreenState extends State<AllMainCategoriesScreen> {
                                       child: CachedNetworkImage(
                                         fit: BoxFit.cover,
                                         imageUrl: categoriesList[index].image,
-                                        progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                            CupertinoActivityIndicator(),
-                                        errorWidget: (context, url, error) => Icon(Icons.error),
+                                        progressIndicatorBuilder:
+                                            (context, url, downloadProgress) =>
+                                                CupertinoActivityIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
                                       ),
                                     ),
                                   ),
-
                                   SizedBox(
                                     width: 16,
                                   ),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           categoriesList[index]
@@ -97,100 +95,157 @@ class _AllMainCategoriesScreenState extends State<AllMainCategoriesScreen> {
                                         ),
                                         Row(
                                           children: [
-                                            RaisedButton(
-                                              color: Colors.green,
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: Colors.green),
                                               onPressed: () {
-
                                                 //navigate to edit category screen
-                                                Navigator.of(context)
-                                                    .push(new MaterialPageRoute(builder: (context) =>
-                                                      EditMainCategoryScreen(categoryObj: categoriesList[index])));
-
+                                                Navigator.of(context).push(
+                                                    new MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EditMainCategoryScreen(
+                                                                categoryObj:
+                                                                    categoriesList[
+                                                                        index])));
                                               },
                                               child: new Text("Edit",
                                                   style: TextStyle(
-                                                      color: ColorConstants.whiteColor)),
+                                                      color: ColorConstants
+                                                          .whiteColor)),
                                             ),
                                             SizedBox(
                                               width: 8,
                                             ),
-                                            RaisedButton(
-                                              color: ColorConstants.redColor,
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  primary:
+                                                      ColorConstants.redColor),
                                               onPressed: () {
-
-                                                deleteConfirmationDialog = Dialog(
-                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)), //this right here
+                                                deleteConfirmationDialog =
+                                                    Dialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0)), //this right here
                                                   child: Container(
-                                                    width: MediaQuery.of(context).size.width,
-                                                    height: MediaQuery.of(context).size.height / 2.5,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            2.5,
                                                     //margin: EdgeInsets.all(16),
-                                                    child: SingleChildScrollView(
+                                                    child:
+                                                        SingleChildScrollView(
                                                       child: Column(
                                                         children: <Widget>[
-
                                                           SizedBox(
                                                             height: 16,
                                                           ),
-
                                                           Padding(
-                                                            padding:  EdgeInsets.all(8.0),
-                                                            child: Text('Delete Confirmation', style: TextStyle(fontFamily: 'Quicksand', fontSize: 26, color: Colors.black, fontWeight: FontWeight.bold),),
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child: Text(
+                                                              'Delete Confirmation',
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      'Quicksand',
+                                                                  fontSize: 26,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
                                                           ),
                                                           Padding(
-                                                            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 56.0),
-                                                            child: Text('Are you sure want to delete this category ?',
-                                                              style: TextStyle(fontSize: 20, color: Colors.black, fontFamily: 'Quicksand',), textAlign: TextAlign.center, ),
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        16.0,
+                                                                    vertical:
+                                                                        56.0),
+                                                            child: Text(
+                                                              'Are you sure want to delete this category ?',
+                                                              style: TextStyle(
+                                                                fontSize: 20,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontFamily:
+                                                                    'Quicksand',
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
                                                           ),
-
                                                           Row(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
                                                             children: [
-                                                              RaisedButton(
-                                                                color: Colors.blue,
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                        primary:
+                                                                            Colors.blue),
                                                                 onPressed: () {
-
-                                                                  Navigator.pop(context);
+                                                                  Navigator.pop(
+                                                                      context);
 
                                                                   //delete record from fire store database
-                                                                  _deleteCategory(cxt, categoriesList[index].id);
-
+                                                                  _deleteCategory(
+                                                                      cxt,
+                                                                      categoriesList[
+                                                                              index]
+                                                                          .id);
                                                                 },
-                                                                child: new Text("Yes",
+                                                                child: new Text(
+                                                                    "Yes",
                                                                     style: TextStyle(
-                                                                        color: ColorConstants.whiteColor)),
+                                                                        color: ColorConstants
+                                                                            .whiteColor)),
                                                               ),
                                                               SizedBox(
                                                                 width: 8,
                                                               ),
-                                                              RaisedButton(
-                                                                color: ColorConstants.redColor,
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                        primary:
+                                                                            ColorConstants.redColor),
                                                                 onPressed: () {
-
-                                                                  Navigator.pop(context);
-
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 },
-                                                                child: new Text("No",
+                                                                child: new Text(
+                                                                    "No",
                                                                     style: TextStyle(
-                                                                        color: ColorConstants.whiteColor)),
+                                                                        color: ColorConstants
+                                                                            .whiteColor)),
                                                               ),
                                                             ],
                                                           ),
-
-
-
                                                         ],
                                                       ),
                                                     ),
                                                   ),
                                                 );
 
-                                                showDialog(context: context, builder: (BuildContext context) => deleteConfirmationDialog);
-
-
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        deleteConfirmationDialog);
                                               },
                                               child: new Text("Delete",
                                                   style: TextStyle(
-                                                      color: ColorConstants.whiteColor)),
+                                                      color: ColorConstants
+                                                          .whiteColor)),
                                             ),
                                           ],
                                         ),
@@ -205,12 +260,10 @@ class _AllMainCategoriesScreenState extends State<AllMainCategoriesScreen> {
                       ],
                     ),
                   ),
-
                   Visibility(
                     visible: isLoading,
                     child: CircularProgressIndicator(),
                   ),
-
                 ],
               ),
             ),
@@ -221,15 +274,12 @@ class _AllMainCategoriesScreenState extends State<AllMainCategoriesScreen> {
   }
 
   void _getAllCategories() {
-
     CategoryModel categoryModel;
 
     fireStoreInstance.collection("categories").get().then((querySnapshot) {
       print("ejaz");
       print(querySnapshot.docs.length);
       querySnapshot.docs.forEach((result) {
-
-
         categoryModel = CategoryModel.fromJson(result.data());
         categoriesList.add(categoryModel);
       });
@@ -237,42 +287,33 @@ class _AllMainCategoriesScreenState extends State<AllMainCategoriesScreen> {
       setState(() {
         isLoading = false;
       });
-
     });
   }
 
   void _deleteCategory(BuildContext cxt, String id) {
-
     setState(() {
       isLoading = true;
     });
 
     fireStoreInstance.collection("categories").doc(id).delete().then((_) {
-
       deleteCategoryItemFromList(id);
       Utils.displaySnackBar(cxt, 'Category deleted !', 2);
       print("success!");
-
     });
-
   }
 
   deleteCategoryItemFromList(String id) {
     int keyIndex = -1;
-    for(int i=0; i<categoriesList.length; i++) {
-
-      if(categoriesList[i].id == id) {
+    for (int i = 0; i < categoriesList.length; i++) {
+      if (categoriesList[i].id == id) {
         keyIndex = i;
       }
     }
 
-    if(keyIndex != -1)
-      categoriesList.removeAt(keyIndex);
+    if (keyIndex != -1) categoriesList.removeAt(keyIndex);
 
     setState(() {
       isLoading = false;
     });
-
   }
-
 }

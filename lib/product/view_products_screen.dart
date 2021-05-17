@@ -1,5 +1,4 @@
 import 'package:admin_review/components/custom_app_bar.dart';
-import 'package:admin_review/model/products_model.dart';
 import 'package:admin_review/product/product_edit_screen.dart';
 import 'package:admin_review/product/product_model.dart';
 import 'package:admin_review/utils/color_constants.dart';
@@ -7,7 +6,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ViewProductsScreen extends StatefulWidget {
   @override
@@ -55,15 +53,19 @@ class _ViewProductsScreenState extends State<ViewProductsScreen> {
                                     flex: 2,
                                     child: Padding(
                                       padding: const EdgeInsets.all(16.0),
-                                      child: CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                        imageUrl: _productsList[index].image,
-                                        progressIndicatorBuilder:
-                                            (context, url, downloadProgress) =>
-                                                CupertinoActivityIndicator(),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      ),
+                                      child: _productsList[index].image != null
+                                          ? CachedNetworkImage(
+                                              fit: BoxFit.cover,
+                                              imageUrl:
+                                                  _productsList[index].image,
+                                              progressIndicatorBuilder: (context,
+                                                      url, downloadProgress) =>
+                                                  CupertinoActivityIndicator(),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            )
+                                          : const SizedBox(),
                                     ),
                                   ),
                                   Expanded(
@@ -73,7 +75,7 @@ class _ViewProductsScreenState extends State<ViewProductsScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          _productsList[index].name,
+                                          _productsList[index].name ?? '',
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
@@ -101,7 +103,7 @@ class _ViewProductsScreenState extends State<ViewProductsScreen> {
                                         Row(
                                           children: [
                                             Text(
-                                              _productsList[index].likes,
+                                              _productsList[index].likes ?? '',
                                               style: TextStyle(
                                                   color:
                                                       ColorConstants.greyColor),
@@ -138,7 +140,7 @@ class _ViewProductsScreenState extends State<ViewProductsScreen> {
                                                 color: Colors.red),
                                             SizedBox(width: 4),
                                             Text(
-                                              _productsList[index].likes,
+                                              _productsList[index].likes ?? '',
                                               style: TextStyle(
                                                   color:
                                                       ColorConstants.greyColor),
