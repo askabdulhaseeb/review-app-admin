@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart';
 
 class NotificationController {
   static Future<String> sendPushNotification(
@@ -12,14 +14,13 @@ class NotificationController {
 
       dio.options.headers["Content-Type"] = "application/json";
       dio.options.headers["Authorization"] = "key=$FIREBASE_SERVER_KEY";
+      String imageURL;
+      if (image != null) {
+        imageURL = await _storeImageToFirestore(image);
+      }
 
       var data = {
-        "notification": {
-          "title": title,
-          "body": body,
-          // "image":
-          //     "https://firebasestorage.googleapis.com/v0/b/jabardasth.appspot.com/o/jabardasth_offers_images%2Fanniversary_offer.jpg?alt=media&token=635e9fb4-8f15-415f-9212-cf9ddb04d510"
-        },
+        "notification": {"title": title, "body": body, "image": imageURL},
         "to": "/topics/all"
       };
       Response _response = await dio.post(
@@ -29,6 +30,22 @@ class NotificationController {
       return _response.toString();
     } catch (e) {
       return e.toString();
+    }
+  }
+
+  static Future<String> _storeImageToFirestore(File image) async {
+    try {
+      final ref = FirebaseStorage.instance.ref(
+          'NotificationImages/${DateTime.now().millisecondsSinceEpoch.toString() + basename(image.path)}');
+
+      var task = ref.putFile(image);
+      if (task == null) return null;
+      final snapshot = await task.whenComplete(() {});
+      final urlDownload = await snapshot.ref.getDownloadURL();
+      return urlDownload;
+    } on FirebaseException catch (e) {
+      print(e);
+      return null;
     }
   }
 }

@@ -23,6 +23,7 @@ class _ImagePickerViewState extends State<ImagePickerView> {
         _image = File(image.path);
       });
     }
+    widget.onImageSelection.call(_image);
   }
 
   @override

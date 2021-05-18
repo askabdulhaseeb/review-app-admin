@@ -72,7 +72,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           ),
           ImagePickerView(
             onImageSelection: _onImageSelection,
-          )
+          ),
+          const SizedBox(
+            height: 100,
+          ),
         ],
       ),
       floatingActionButton: Padding(
