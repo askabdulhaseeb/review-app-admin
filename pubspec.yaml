@@ -20,6 +20,7 @@ dependencies:
   cloud_firestore: ^2.1.0
   firebase_storage: ^8.0.6
   flutter_rating_bar: ^4.0.0
+  dio: ^4.0.0
 
 dev_dependencies:
   flutter_test:
